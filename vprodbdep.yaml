@@ -14,6 +14,20 @@ spec:
       labels:
         app: vprodb
     spec:
+      nodeSelector:
+        zone: us-east-1a
+      volumes:
+        - name: vpro-db-data
+          awsElasticBlockStore:
+            volumeID: vol-051e69db060bb149e
+            fsType: ext4
+      initContainers: # Corrected field name
+        - name: busybox
+          image: busybox:latest
+          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+          volumeMounts:
+            - name: vpro-db-data
+              mountPath: /var/lib/mysql
       containers:
         - name: vprodb
           image: vprofile/vprofiledb:V1
@@ -29,17 +43,3 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: db-pass
-    nodeSelector:
-      zone: us-east-1a
-    volumes:
-      - name: vpro-db-data
-        awsElasticBlockStore:
-          volumeID: vol-051e69db060bb149e
-          fsType: ext4
-    initContainer:
-      - name: busybox
-        image: busybox:latest
-        args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
-        volumeMounts:
-          - name: vpro-db-data
-            mountPath: /var/lib/mysql
