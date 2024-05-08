@@ -10,8 +10,9 @@ spec:
     matchLabels:
       app: vprormq01
   template:
-    labels:
-      app: vprormq01
+    metadata:
+      labels:
+        app: vprormq01
     spec:
       containers:
         - image: vprormq01
