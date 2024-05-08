@@ -28,7 +28,7 @@ spec:
             [
               "sh",
               "-c",
-              "until nslookup vprodb; do echo waiting for mydb; sleep 2; done;",
+              "until nslookup vprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprodb; sleep 2; done;",
             ]
         - name: init-mycache
           image: busybox
@@ -36,5 +36,5 @@ spec:
             [
               "sh",
               "-c",
-              "until nslookup vprocache01; do echo waiting for cache; sleep 2; done;",
+              "until nslookup vpromc01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprocache01; sleep 2; done;",
             ]
