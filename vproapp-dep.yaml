@@ -36,5 +36,5 @@ spec:
             [
               "sh",
               "-c",
-              "until nslookup vpromc01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprocache01; sleep 2; done;",
+              "until nslookup vprocache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprocache01; sleep 2; done;",
             ]
